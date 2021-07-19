@@ -484,6 +484,40 @@ cc_test(
     ],
 )
 
+cc_library(
+    name = "whitespace_tokenizer_config_builder",
+    srcs = ["whitespace_tokenizer_config_builder.cc"],
+    hdrs = ["whitespace_tokenizer_config_builder.h"],
+    deps = [
+        "@icu//:common",
+    ],
+)
+
+cc_test(
+    name = "whitespace_tokenizer_config_builder_test",
+    size = "small",
+    srcs = ["whitespace_tokenizer_config_builder_test.cc"],
+    deps = [
+        ":whitespace_tokenizer_config_builder",
+        ":whitespace_tokenizer_config_util",
+        "@com_google_googletest//:gtest_main",
+        "@icu//:common",
+        # tf:lib tensorflow dep,
+        # tf:test_main tensorflow dep,
+        "//tensorflow_text:wordpiece_tokenizer_cc",
+    ],
+)
+
+cc_library(
+    name = "whitespace_tokenizer_config_util",
+    srcs = ["whitespace_tokenizer_config_util.h"],
+    hdrs = ["whitespace_tokenizer_config_util.h"],
+    deps = [
+        # absl/strings dep
+        "@icu//:common",
+    ],
+)
+
 tf_text_kernel_library(
     name = "wordpiece_kernel",
     srcs = ["wordpiece_kernel.cc"],
@@ -519,4 +553,9 @@ cc_test(
         # tf/kernels:ops_testutil tensorflow dep,
         "//tensorflow_text:wordpiece_tokenizer_cc",
     ],
+)
+
+cc_test(
+    name = "normalize_kernels_test",
+    srcs = ["normalize_kernels_test.cc"],
 )
